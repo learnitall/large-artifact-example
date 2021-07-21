@@ -1,0 +1,15 @@
+name: Upload large artifact
+on:
+  workflow_dispatch:
+jobs:
+  create_artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write large random file
+        run: yes artifact | head -m 5GB > artifact.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: ./artifact.txt
+          retention-days: 1
